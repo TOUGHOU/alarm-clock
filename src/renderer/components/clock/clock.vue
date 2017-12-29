@@ -1,4 +1,7 @@
 <script>
+// import * as type from 'electron'
+import Clock from './clock'
+
 export default {
   data () {
     return {
@@ -12,71 +15,39 @@ export default {
   },
 
   created () {
-    this.getCurrentTime()
-  },
-
-  watch: {
-    seconds () {
-      this.clockCount()
-    }
+    this.createdClock()
   },
 
   methods: {
     clockClick () {
       this.open = !this.open
     },
+
     clockChange (time) {
       this.timeValue = time
     },
+
     clockClear () {
       this.open = false
     },
+
     clockOk () {
       this.open = false
       this.cloclList.unshift(this.timeValue)
     },
+
     createClockItem () {
       let li = document.createElement('li')
       li.classList.add('clock-item')
       li.innerHTML = this.timeValue
     },
-    getCurrentTime () {
-      let date = new Date()
-      this.hours = this._padZero(date.getHours()) // this._padZero(23)//
-      this.mins = this._padZero(date.getMinutes()) // this._padZero(59)//
-      this.seconds = this._padZero(date.getSeconds()) // this._padZero(8)//
-      this.clockRun()
-    },
-    clockCount () {
-      // console.log(this.seconds)
-      if (+this.seconds > 59) {
-        this.seconds = this._padZero(0)
-        if (+this.mins >= 59) {
-          this.mins = this._padZero(0)
-          this.hours = this._padZero(this.hours++)
-          if (+this.hours >= 23) {
-            this.mins = this._padZero(0)
-            this.hours = '00'
-          } else {
-            this.hours = this._padZero(this.hours++)
-          }
-        } else {
-          this.mins++
-          this.mins = this._padZero(this.mins)
-        }
-      }
-    },
-    clockRun () {
-      setInterval(() => {
-        this.seconds++
-        this.seconds = this._padZero(this.seconds)
-      }, 1000)
-    },
-    _padZero (num) {
-      if (num < 10) {
-        return '0' + num
-      }
-      return num + ''
+
+    createdClock () {
+      this.clock = new Clock((time) => {
+        this.hours = time.hour
+        this.mins = time.min
+        this.seconds = time.sec
+      })
     }
   }
 }
