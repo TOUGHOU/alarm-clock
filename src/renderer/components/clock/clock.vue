@@ -8,9 +8,10 @@ export default {
       open: false,
       cloclList: [],
       timeValue: '',
-      hours: 0,
-      mins: 0,
-      seconds: 0
+      hours: '--',
+      mins: '--',
+      seconds: '--',
+      isListening: false
     }
   },
 
@@ -48,6 +49,12 @@ export default {
         this.mins = time.min
         this.seconds = time.sec
       })
+    },
+
+    compareTime () {
+      // let now = new Date()
+      // let nowHour = now.getHours()
+      // let nowMin = now.getMinutes()
     }
   }
 }
@@ -65,9 +72,9 @@ export default {
     <div class="right-part">
       <div class="clock-container">
         <span class="time-block">{{hours}}</span>
-        <i>:</i>
+        <b>:</b>
         <span class="time-block">{{mins}}</span>
-        <i>:</i>
+        <b>:</b>
         <span class="time-block">{{seconds}}</span>
       </div>
       <div class="toolbar">
